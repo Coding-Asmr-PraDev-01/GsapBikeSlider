@@ -12,8 +12,6 @@ const bikeImgsUrl = [
     `${commonPath}/motorbike-6.png`,
 ];
 
-// console.log(bikeImgsUrl[0])
-
 const bikeNames = [
     "Confederate G2 P51 Combat Fighter",
     "KTM 890 DUKE R 2023",
@@ -31,6 +29,20 @@ const bikeDescriptions = [
     "Simpler mechanics and require less maintenance compared to cars.",
     "Allows you to experience nature up close, enjoy fresh air, and connect with the environment around you.",
 ];
+
+
+/*
+    While the preloadImages array is not explicitly used in the code provided, the act of creating and 
+    setting the src attribute of the Image objects in the array triggers the browser to start loading
+    the images in the background. This ensures that when you later update the src attribute of the
+    actual img element, the image is already loaded and the transition is smoother.
+*/
+// Preload images
+let preLoadImgs = [];
+for(let i = 0; i < bikeImgsUrl.length; i++){
+    preLoadImgs[i] = new Image();
+    preLoadImgs[i].src = bikeImgsUrl[i];
+}
 
 const bikePrices = ["243,000", "354,000", "154,000", "34,000", "10,000", "94,000"];
 const engCapicities = ["2,123", "4,003", "6,422", "9,981", "4,352", "7,543"];
@@ -59,7 +71,6 @@ const changeBike = (arrowDir) => {
             // Update the content after the animation
             heading.textContent = bikeNames[currInd];
             text.textContent = bikeDescriptions[currInd];
-            bikeImg.src = bikeImgsUrl[currInd];
             bikePrice.textContent = "$"+bikePrices[currInd];    
             bikeCap.textContent = engCapicities[currInd];
             bikeSpeed.textContent = bikeSpeeds[currInd];
@@ -70,7 +81,7 @@ const changeBike = (arrowDir) => {
             
             gsap.fromTo(heading, { opacity: 0, x: -20 }, { duration: 0.6, opacity: 1, x: 0});
             gsap.fromTo(text, { opacity: 0, x: -60 }, { duration: 0.6, opacity: 1, x: 0, delay: 0.2});
-            gsap.fromTo(bikeImg, { opacity: 0, y: -50 }, { duration: 0.6, opacity: 1, y: 0, delay: 0.3});
+            gsap.fromTo(bikeImg, { opacity: 0.5, y: -50 }, { duration: 0.6, opacity: 1, y: 0, delay: 0.3});
             gsap.fromTo(bikePrice, { opacity: 0, x: 70 }, { duration: 0.6, opacity: 1, x: 0, delay: 0.4});
             gsap.fromTo(bikeCap, { opacity: 0, y: 20 }, { duration: 0.6, opacity: 1, y: 0, delay: 0.5});
             gsap.fromTo(bikeSpeed, { opacity: 0, y: 20 }, { duration: 0.6, opacity: 1, y: 0, delay: 0.6});
@@ -93,6 +104,8 @@ const changeBike = (arrowDir) => {
             //     }
             // }
 
+            // setting source of image after animation
+            bikeImg.src = bikeImgsUrl[currInd];
 
             for (let i = 0; i < numBtns.length; i++) {
                 numBtns[i].style.display = "none";
