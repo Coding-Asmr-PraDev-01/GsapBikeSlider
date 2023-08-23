@@ -8,22 +8,23 @@ document.addEventListener('DOMContentLoaded', () => {
     let prevBtn = btnEle[0].classList.contains('prevBtn') ? btnEle[0] : undefined;
     let nextBtn = btnEle[1].classList.contains('nextBtn') ? btnEle[1] : undefined;
     let len;
-    console.log(prevBtn, nextBtn)
+    let fetchData;
 
     // Fetching data from local json file 
     fetch('./data.json')
     .then(res => res.json())
     .then(data => {
         console.log(data.watchData)
-        len = data.watchData;
+        len = data.watchData.length;
+        fetchData = data;
         // data.watchData.forEach((watchObj, ind) => {
             
         // })
-
+console.log(fetchData)
         // demo
-        watchNameEle.innerText = data.watchData[0].name;
-        watchDescEle.innerText = data.watchData[0].desc;
-        watchPriceEle.innerText = data.watchData[0].price;
+        watchNameEle.innerText = fetchData.watchData[0].name;
+        watchDescEle.innerText = fetchData.watchData[0].desc;
+        watchPriceEle.innerText = fetchData.watchData[0].price;
        
     })
 
@@ -48,21 +49,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Slider
     let ind = 0;
-    prevBtn.addEventListener('click', () => {
+    nextBtn.addEventListener('click', () => {
+        watchNameEle.innerText = fetchData.watchData[ind].name;
+        watchDescEle.innerText = fetchData.watchData[ind].desc;
+        watchPriceEle.innerText = fetchData.watchData[ind].price;
+        console.log(ind)
         if(ind == len - 1){
             ind = 0;
         }else{
             ind++;
         }
 
-        watchNameEle.innerText = data.watchData[ind].name;
-        watchDescEle.innerText = data.watchData[ind].desc;
-        watchPriceEle.innerText = data.watchData[ind].price;
         
     });
 
-    nextBtn.addEventListener('click', () => {
+    prevBtn.addEventListener('click', () => {
+        watchNameEle.innerText = fetchData.watchData[ind].name;
+        watchDescEle.innerText = fetchData.watchData[ind].desc;
+        watchPriceEle.innerText = fetchData.watchData[ind].price;
+        console.log(ind)
+        if(ind == 0){
+            ind = len - 1;
+        }else{
+            ind--;
+        }
 
+       
+    
     });
 
     // Create the dots
